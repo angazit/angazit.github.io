@@ -1,9 +1,41 @@
-<html>
- 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hebrew Language Islands</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
 <body>
-  <h1>Hey Anna!</h1>
-  <p>Welcome to my website!</p>
-  <img src="https://content.codecademy.com/articles/github-pages-via-web-app/happy-ice-cream.gif" />
+  <header class="app-header">
+    <h1>Hey Anna! 🌊</h1>
+    <p>Let's learn Hebrew, one island at a time.</p>
+  </header>
+
+  <main>
+    <section id="grid-view">
+      <div class="island-grid" id="island-grid"></div>
+    </section>
+
+    <section id="detail-view" class="hidden">
+      <div class="island-detail">
+        <div class="detail-top">
+          <button class="back-button" id="back-button">← All islands</button>
+          <div class="mode-toggle">
+            <button id="mode-listen" class="active">🎧 Listen &amp; Repeat</button>
+            <button id="mode-recall">🧠 Active Recall</button>
+          </div>
+        </div>
+        <h2 id="island-title"></h2>
+        <div id="listen-panel"></div>
+        <div id="recall-panel" class="hidden"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>Made with ❤️ for Anna</footer>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/app.js"></script>
 </body>
- 
 </html>
