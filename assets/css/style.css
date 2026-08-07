@@ -117,9 +117,8 @@ main {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  flex-wrap: wrap;
   gap: 0.75rem;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1rem;
 }
 
 .back-button {
@@ -129,33 +128,38 @@ main {
   font-size: 1rem;
   cursor: pointer;
   padding: 0.4rem 0.2rem;
-}
-
-.detail-controls {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
+  flex-shrink: 0;
 }
 
 .icon-button {
   background: var(--sand-dark);
   border: none;
   border-radius: 10px;
-  width: 40px;
-  height: 40px;
-  font-size: 1.1rem;
+  padding: 0.5rem 0.85rem;
+  font-size: 0.95rem;
+  color: var(--ink);
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
+  gap: 0.35rem;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .icon-button:hover {
   background: #e4d6b3;
 }
 
+.mode-toggle-row {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+}
+
 .mode-toggle {
   display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
   background: var(--sand-dark);
   border-radius: 999px;
   padding: 4px;
