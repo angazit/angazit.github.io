@@ -21,9 +21,12 @@
       <div class="island-detail">
         <div class="detail-top">
           <button class="back-button" id="back-button">← All islands</button>
-          <div class="mode-toggle">
-            <button id="mode-listen" class="active">🎧 Listen &amp; Repeat</button>
-            <button id="mode-recall">🧠 Active Recall</button>
+          <div class="detail-controls">
+            <div class="mode-toggle">
+              <button id="mode-listen" class="active">🎧 Listen &amp; Repeat</button>
+              <button id="mode-recall">🧠 Active Recall</button>
+            </div>
+            <button class="icon-button" id="settings-button" title="Practice settings">⚙️</button>
           </div>
         </div>
         <h2 id="island-title"></h2>
@@ -34,6 +37,87 @@
   </main>
 
   <footer>Made with ❤️ for Talia</footer>
+
+  <div id="settings-overlay" class="settings-overlay hidden">
+    <div class="settings-panel">
+      <div class="settings-panel-header">
+        <div>
+          <h2>⚙️ Practice Settings</h2>
+          <p>Customize repetitions, pauses, and playback</p>
+        </div>
+        <button class="icon-button" id="settings-close">✕</button>
+      </div>
+
+      <div class="settings-body">
+        <div class="settings-group">
+          <p class="settings-label">Repetitions per Word</p>
+          <div class="segmented" id="setting-repetitions"></div>
+        </div>
+
+        <div class="settings-group">
+          <p class="settings-label">Pause Between Repeats</p>
+          <div class="segmented" id="setting-pause-repeats"></div>
+        </div>
+
+        <div class="settings-group">
+          <p class="settings-label">Pause Between Words</p>
+          <p class="settings-sublabel">Used while auto-playing through an island</p>
+          <div class="segmented" id="setting-pause-words"></div>
+        </div>
+
+        <div class="settings-group">
+          <p class="settings-label">Playback Speed</p>
+          <p class="settings-sublabel" id="speed-readout">1× Normal</p>
+          <input type="range" id="setting-speed" min="0.5" max="2" step="0.1" />
+          <div class="range-ticks"><span>0.5×</span><span>1×</span><span>1.5×</span><span>2×</span></div>
+        </div>
+
+        <div class="settings-group">
+          <p class="settings-label">Text Size</p>
+          <div class="segmented" id="setting-textsize"></div>
+        </div>
+
+        <div class="settings-group">
+          <p class="settings-label">Word Order</p>
+          <div class="segmented" id="setting-order"></div>
+        </div>
+
+        <div class="settings-group toggle-row">
+          <div>
+            <p class="settings-label">Show Transliteration</p>
+            <p class="settings-sublabel">Display the English-letter pronunciation guide</p>
+          </div>
+          <label class="switch"><input type="checkbox" id="setting-transliteration" /><span class="slider"></span></label>
+        </div>
+
+        <div class="settings-group toggle-row">
+          <div>
+            <p class="settings-label">Show English Translation</p>
+            <p class="settings-sublabel">Listen &amp; Repeat mode only</p>
+          </div>
+          <label class="switch"><input type="checkbox" id="setting-english" /><span class="slider"></span></label>
+        </div>
+
+        <div class="settings-group toggle-row">
+          <div>
+            <p class="settings-label">Autoplay on Card Open</p>
+            <p class="settings-sublabel">Play the word automatically when a card appears</p>
+          </div>
+          <label class="switch"><input type="checkbox" id="setting-autoplay" /><span class="slider"></span></label>
+        </div>
+
+        <div class="settings-group toggle-row">
+          <div>
+            <p class="settings-label">Loop Playback</p>
+            <p class="settings-sublabel">Restart from the first word when auto-play reaches the end</p>
+          </div>
+          <label class="switch"><input type="checkbox" id="setting-loop" /><span class="slider"></span></label>
+        </div>
+
+        <button class="secondary" id="settings-reset">Reset to defaults</button>
+      </div>
+    </div>
+  </div>
 
   <script src="assets/js/data.js"></script>
   <script src="assets/js/app.js"></script>
