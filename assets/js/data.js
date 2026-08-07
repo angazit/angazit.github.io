@@ -71,7 +71,7 @@ const ISLANDS = [
   {
     id: "everyday",
     name: "Everyday Phrases",
-    hebrewName: "בִּטּוּיִים יוֹמְיוֹמִיִּים",
+    hebrewName: "בִּטּוּיִים יוֹם-יוֹמִיִּים",
     emoji: "💬",
     items: [
       { id: "everyday-1", hebrew: "כֵּן", transliteration: "Ken", english: "Yes" },
@@ -145,7 +145,7 @@ const ISLANDS = [
       { id: "animals-5", hebrew: "אַרְיֵה", transliteration: "Arye", english: "Lion" },
       { id: "animals-6", hebrew: "פִּיל", transliteration: "Pil", english: "Elephant" },
       { id: "animals-7", hebrew: "סוּס", transliteration: "Sus", english: "Horse" },
-      { id: "animals-8", hebrew: "דּוֹב", transliteration: "Dov", english: "Bear" },
+      { id: "animals-8", hebrew: "דֹּב", transliteration: "Dov", english: "Bear" },
     ],
   },
 ];
