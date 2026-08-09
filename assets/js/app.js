@@ -42,6 +42,9 @@ let state = {
 
 let autoplayActive = false;
 let autoplayTimer = null;
+let currentAudioEl = null;
+
+const AUDIO_DIR = "assets/audio/";
 
 // --- Persistence ---
 
@@ -142,7 +145,7 @@ function openIsland(id) {
 
 function closeIsland() {
   stopAutoplaySequence();
-  window.speechSynthesis && window.speechSynthesis.cancel();
+  stopAllAudio();
   detailView.classList.add("hidden");
   gridView.classList.remove("hidden");
   renderGrid();
@@ -150,7 +153,7 @@ function closeIsland() {
 
 function setMode(mode) {
   stopAutoplaySequence();
-  window.speechSynthesis && window.speechSynthesis.cancel();
+  stopAllAudio();
   state.mode = mode;
   modeListenBtn.classList.toggle("active", mode === "listen");
   modeRecallBtn.classList.toggle("active", mode === "recall");
@@ -168,6 +171,21 @@ function setMode(mode) {
 }
 
 // --- Audio engine (respects repetitions / pauses / speed) ---
+// Plays the pre-recorded natural-voice clip for a word when one exists
+// (assets/audio/<item-id>.mp3), falling back to the browser's built-in
+// speechSynthesis for any word that doesn't have one yet.
+
+function stopAllAudio() {
+  if (currentAudioEl) {
+    currentAudioEl.onended = null;
+    currentAudioEl.onerror = null;
+    currentAudioEl.pause();
+    currentAudioEl = null;
+  }
+  if ("speechSynthesis" in window) {
+    window.speechSynthesis.cancel();
+  }
+}
 
 function speakOnce(text, rate, onEnd) {
   if (!("speechSynthesis" in window)) {
@@ -183,13 +201,23 @@ function speakOnce(text, rate, onEnd) {
   window.speechSynthesis.speak(utterance);
 }
 
-function playWithRepetitions(text, onComplete) {
+function playClipOnce(item, rate, onEnd) {
+  stopAllAudio();
+  const audio = new Audio(`${AUDIO_DIR}${item.id}.mp3`);
+  currentAudioEl = audio;
+  audio.playbackRate = rate;
+  audio.onended = onEnd;
+  audio.onerror = () => speakOnce(item.hebrew, rate, onEnd);
+  audio.play().catch(() => speakOnce(item.hebrew, rate, onEnd));
+}
+
+function playWithRepetitions(item, onComplete) {
   const settings = loadSettings();
   let remaining = settings.repetitions;
 
   function step() {
     remaining -= 1;
-    speakOnce(text, settings.playbackSpeed, () => {
+    playClipOnce(item, settings.playbackSpeed, () => {
       if (remaining > 0) {
         autoplayTimer = setTimeout(step, settings.pauseBetweenRepeats * 1000);
       } else if (onComplete) {
@@ -230,7 +258,7 @@ function renderListenCard() {
 
   document.getElementById("play-audio").addEventListener("click", () => {
     stopAutoplaySequence();
-    playWithRepetitions(item.hebrew);
+    playWithRepetitions(item);
   });
   document.getElementById("listen-prev").addEventListener("click", () => {
     stopAutoplaySequence();
@@ -244,7 +272,7 @@ function renderListenCard() {
   });
 
   if (settings.autoplayOnOpen && !autoplayActive) {
-    playWithRepetitions(item.hebrew);
+    playWithRepetitions(item);
   }
 }
 
@@ -283,7 +311,7 @@ function runAutoplayStep() {
   const item = state.listenOrder[state.listenIndex];
   renderListenCard();
 
-  playWithRepetitions(item.hebrew, () => {
+  playWithRepetitions(item, () => {
     if (!autoplayActive) return;
     const settings = loadSettings();
     autoplayTimer = setTimeout(() => {
