@@ -1,13 +1,22 @@
 :root {
-  --sea: #0e7c86;
-  --sea-dark: #0a5e66;
-  --sand: #fdf6e9;
-  --sand-dark: #f0e2c4;
-  --ink: #223;
-  --coral: #ff6f59;
-  --leaf: #3fa796;
-  --card-radius: 18px;
-  --shadow: 0 6px 18px rgba(14, 124, 134, 0.15);
+  /* Deep Mediterranean sea, warm Jerusalem-stone tan, pomegranate + olive accents */
+  --sea-deep: #1c4f63;
+  --sea-deeper: #123847;
+  --sea-tint: #dce8e9;
+  --stone: #f1e8d6;
+  --stone-card: #fbf6ea;
+  --stone-line: #ddccaa;
+  --ink: #2b241c;
+  --ink-soft: #6b5f4c;
+  --pomegranate: #9c3b3b;
+  --pomegranate-soft: #f1dcd6;
+  --olive: #6f7d4f;
+  --olive-soft: #e5e8d6;
+  --card-radius: 12px;
+  --shadow: 0 3px 10px rgba(43, 36, 28, 0.1);
+
+  --font-display: "Frank Ruhl Libre", "Noto Serif Hebrew", "David", serif;
+  --font-body: "Assistant", "Noto Sans Hebrew", system-ui, sans-serif;
 }
 
 * {
@@ -16,98 +25,143 @@
 
 body {
   margin: 0;
-  font-family: "Segoe UI", system-ui, sans-serif;
-  background: linear-gradient(180deg, #d8f0f2 0%, var(--sand) 45%);
+  font-family: var(--font-body);
+  background: var(--stone);
   color: var(--ink);
   min-height: 100vh;
 }
 
 header.app-header {
   text-align: center;
-  padding: 2.5rem 1rem 1.5rem;
+  padding: 2.75rem 1rem 1.75rem;
 }
 
 header.app-header h1 {
+  font-family: var(--font-display);
+  font-weight: 600;
   margin: 0;
-  font-size: 2rem;
-  color: var(--sea-dark);
+  font-size: 2.1rem;
+  color: var(--sea-deep);
+  text-wrap: balance;
 }
 
 header.app-header p {
   margin: 0.4rem 0 0;
-  color: #456;
+  color: var(--ink-soft);
+  font-size: 1rem;
 }
 
 main {
-  max-width: 900px;
+  max-width: 720px;
   margin: 0 auto;
-  padding: 1rem 1.25rem 3rem;
+  padding: 0 1.25rem 3rem;
 }
 
-/* Island grid */
+/* Island list */
 .island-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 
-.island-card {
-  background: white;
+.island-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  background: var(--stone-card);
+  border: 1px solid var(--stone-line);
   border-radius: var(--card-radius);
-  box-shadow: var(--shadow);
-  padding: 1.5rem 1.25rem;
-  text-align: center;
+  padding: 1rem 1.25rem;
+  text-align: left;
   cursor: pointer;
-  border: 3px solid transparent;
-  transition: transform 0.15s ease, border-color 0.15s ease;
+  transition: border-color 0.15s ease, transform 0.15s ease;
 }
 
-.island-card:hover,
-.island-card:focus-visible {
-  transform: translateY(-4px);
-  border-color: var(--leaf);
+.island-row:hover,
+.island-row:focus-visible {
+  border-color: var(--sea-deep);
+  transform: translateX(3px);
+}
+
+.island-row-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.island-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0 0 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--ink);
 }
 
 .island-emoji {
-  font-size: 2.75rem;
-  display: block;
-  margin-bottom: 0.5rem;
+  font-size: 1rem;
 }
 
-.island-card h3 {
-  margin: 0.2rem 0 0.1rem;
-  color: var(--sea-dark);
+.dot-meter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.28rem;
 }
 
-.island-card .hebrew-name {
-  direction: rtl;
-  font-size: 1.1rem;
-  color: var(--coral);
-  margin: 0.1rem 0 0.75rem;
-}
-
-.progress-bar {
+.dot {
+  width: 8px;
   height: 8px;
-  border-radius: 4px;
-  background: var(--sand-dark);
-  overflow: hidden;
+  border-radius: 50%;
+  background: transparent;
+  border: 1.5px solid var(--stone-line);
 }
 
-.progress-bar-fill {
-  height: 100%;
-  background: var(--leaf);
-  transition: width 0.2s ease;
+.dot.filled {
+  background: var(--olive);
+  border-color: var(--olive);
+}
+
+.island-row-count {
+  margin: 0.4rem 0 0;
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+}
+
+.island-row-hebrew {
+  font-family: var(--font-display);
+  direction: rtl;
+  font-size: 1.55rem;
+  font-weight: 500;
+  color: var(--sea-deep);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+@media (max-width: 480px) {
+  .island-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.6rem;
+  }
+
+  .island-row-hebrew {
+    white-space: normal;
+    text-align: right;
+    align-self: stretch;
+  }
 }
 
 .progress-label {
   font-size: 0.8rem;
-  color: #678;
+  color: var(--ink-soft);
   margin-top: 0.35rem;
 }
 
 /* Island detail view */
 .island-detail {
-  background: white;
+  background: var(--stone-card);
+  border: 1px solid var(--stone-line);
   border-radius: var(--card-radius);
   box-shadow: var(--shadow);
   padding: 1.5rem;
@@ -124,7 +178,9 @@ main {
 .back-button {
   background: none;
   border: none;
-  color: var(--sea-dark);
+  color: var(--sea-deep);
+  font-family: var(--font-body);
+  font-weight: 600;
   font-size: 1rem;
   cursor: pointer;
   padding: 0.4rem 0.2rem;
@@ -132,11 +188,13 @@ main {
 }
 
 .icon-button {
-  background: var(--sand-dark);
-  border: none;
-  border-radius: 10px;
+  background: var(--stone);
+  border: 1px solid var(--stone-line);
+  border-radius: 8px;
   padding: 0.5rem 0.85rem;
-  font-size: 0.95rem;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.92rem;
   color: var(--ink);
   cursor: pointer;
   display: inline-flex;
@@ -147,7 +205,7 @@ main {
 }
 
 .icon-button:hover {
-  background: #e4d6b3;
+  border-color: var(--sea-deep);
 }
 
 .mode-toggle-row {
@@ -160,7 +218,8 @@ main {
   display: inline-flex;
   flex-wrap: wrap;
   justify-content: center;
-  background: var(--sand-dark);
+  background: var(--stone);
+  border: 1px solid var(--stone-line);
   border-radius: 999px;
   padding: 4px;
 }
@@ -171,13 +230,15 @@ main {
   padding: 0.5rem 1rem;
   border-radius: 999px;
   cursor: pointer;
-  font-size: 0.95rem;
-  color: #567;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: var(--ink-soft);
 }
 
 .mode-toggle button.active {
-  background: var(--sea);
-  color: white;
+  background: var(--sea-deep);
+  color: var(--stone-card);
 }
 
 /* Listen & Repeat card */
@@ -187,42 +248,48 @@ main {
 }
 
 .hebrew-word {
+  font-family: var(--font-display);
   direction: rtl;
-  font-size: calc(2.75rem * var(--hebrew-scale, 1));
-  color: var(--sea-dark);
+  font-weight: 600;
+  font-size: calc(2.85rem * var(--hebrew-scale, 1));
+  color: var(--sea-deep);
   margin: 0 0 0.5rem;
 }
 
 .transliteration {
   font-style: italic;
-  color: var(--coral);
+  color: var(--pomegranate);
   margin: 0 0 0.25rem;
 }
 
 .english-word {
-  color: #456;
+  color: var(--ink-soft);
   margin: 0 0 1.25rem;
 }
 
 button.primary {
-  background: var(--sea);
-  color: white;
+  background: var(--sea-deep);
+  color: var(--stone-card);
   border: none;
-  border-radius: 10px;
+  border-radius: 8px;
+  font-family: var(--font-body);
+  font-weight: 600;
   padding: 0.65rem 1.25rem;
   font-size: 1rem;
   cursor: pointer;
 }
 
 button.primary:hover {
-  background: var(--sea-dark);
+  background: var(--sea-deeper);
 }
 
 button.secondary {
-  background: var(--sand-dark);
+  background: var(--stone);
   color: var(--ink);
-  border: none;
-  border-radius: 10px;
+  border: 1px solid var(--stone-line);
+  border-radius: 8px;
+  font-family: var(--font-body);
+  font-weight: 600;
   padding: 0.6rem 1.1rem;
   font-size: 0.95rem;
   cursor: pointer;
@@ -239,7 +306,8 @@ button.secondary {
 .progress-dots {
   margin-top: 1rem;
   font-size: 0.85rem;
-  color: #789;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
 }
 
 /* Active Recall flip card */
@@ -268,24 +336,25 @@ button.secondary {
   inset: 0;
   backface-visibility: hidden;
   border-radius: var(--card-radius);
-  border: 2px solid var(--sand-dark);
+  border: 1px solid var(--stone-line);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 1rem;
-  background: var(--sand);
+  background: var(--stone);
 }
 
 .flashcard-face.back {
   transform: rotateY(180deg);
-  background: #eafaf5;
+  background: var(--sea-tint);
+  border-color: var(--sea-deep);
 }
 
 .flip-hint {
   margin-top: 1rem;
   font-size: 0.85rem;
-  color: #789;
+  color: var(--ink-soft);
 }
 
 .recall-actions {
@@ -296,20 +365,24 @@ button.secondary {
 }
 
 button.recall-wrong {
-  background: #ffe3de;
-  color: #a8402f;
+  background: var(--pomegranate-soft);
+  color: var(--pomegranate);
   border: none;
-  border-radius: 10px;
+  border-radius: 8px;
+  font-family: var(--font-body);
+  font-weight: 600;
   padding: 0.65rem 1.25rem;
   cursor: pointer;
   font-size: 1rem;
 }
 
 button.recall-right {
-  background: #dcf5ec;
-  color: #1c7a5e;
+  background: var(--olive-soft);
+  color: var(--olive);
   border: none;
-  border-radius: 10px;
+  border-radius: 8px;
+  font-family: var(--font-body);
+  font-weight: 600;
   padding: 0.65rem 1.25rem;
   cursor: pointer;
   font-size: 1rem;
@@ -320,13 +393,17 @@ button.recall-right {
   padding: 2rem 1rem;
 }
 
+.session-complete h3 {
+  font-family: var(--font-display);
+}
+
 .hidden {
   display: none !important;
 }
 
 footer {
   text-align: center;
-  color: #789;
+  color: var(--ink-soft);
   font-size: 0.85rem;
   padding-bottom: 2rem;
 }
@@ -337,8 +414,9 @@ footer {
   align-items: center;
   gap: 0.75rem;
   padding: 0.75rem 1rem;
-  background: var(--sand);
-  border-radius: 12px;
+  background: var(--stone);
+  border: 1px solid var(--stone-line);
+  border-radius: 10px;
   margin-bottom: 0.5rem;
 }
 
@@ -346,17 +424,19 @@ footer {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  background: var(--sea);
-  color: white;
+  background: var(--sea-deep);
+  color: var(--stone-card);
   border: none;
-  border-radius: 10px;
+  border-radius: 8px;
+  font-family: var(--font-body);
+  font-weight: 600;
   padding: 0.55rem 1rem;
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   cursor: pointer;
 }
 
 .autoplay-toggle.stop {
-  background: var(--coral);
+  background: var(--pomegranate);
 }
 
 .listen-top-bar .progress-dots {
@@ -367,7 +447,7 @@ footer {
 .settings-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(20, 40, 45, 0.45);
+  background: rgba(20, 24, 22, 0.5);
   display: flex;
   align-items: flex-end;
   justify-content: center;
@@ -381,18 +461,18 @@ footer {
 }
 
 .settings-panel {
-  background: white;
+  background: var(--stone-card);
   width: 100%;
   max-width: 480px;
   max-height: 90vh;
   overflow-y: auto;
-  border-radius: 20px 20px 0 0;
+  border-radius: 16px 16px 0 0;
   padding: 1.5rem;
 }
 
 @media (min-width: 640px) {
   .settings-panel {
-    border-radius: 20px;
+    border-radius: 16px;
   }
 }
 
@@ -405,19 +485,22 @@ footer {
 }
 
 .settings-panel-header h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
   margin: 0 0 0.2rem;
-  color: var(--sea-dark);
+  color: var(--sea-deep);
 }
 
 .settings-panel-header p {
   margin: 0;
-  color: #678;
+  color: var(--ink-soft);
   font-size: 0.9rem;
 }
 
 .settings-group {
-  background: var(--sand);
-  border-radius: 14px;
+  background: var(--stone);
+  border: 1px solid var(--stone-line);
+  border-radius: 12px;
   padding: 1rem;
   margin-bottom: 1rem;
 }
@@ -431,7 +514,7 @@ footer {
 .settings-sublabel {
   margin: -0.3rem 0 0.6rem;
   font-size: 0.82rem;
-  color: #789;
+  color: var(--ink-soft);
 }
 
 .segmented {
@@ -441,30 +524,32 @@ footer {
 }
 
 .segmented button {
-  border: none;
-  background: white;
+  border: 1px solid var(--stone-line);
+  background: var(--stone-card);
   border-radius: 999px;
+  font-family: var(--font-body);
   padding: 0.4rem 0.85rem;
   font-size: 0.9rem;
   cursor: pointer;
-  color: #456;
+  color: var(--ink);
 }
 
 .segmented button.active {
-  background: var(--sea);
-  color: white;
+  background: var(--sea-deep);
+  border-color: var(--sea-deep);
+  color: var(--stone-card);
 }
 
 .settings-group input[type="range"] {
   width: 100%;
-  accent-color: var(--sea);
+  accent-color: var(--sea-deep);
 }
 
 .range-ticks {
   display: flex;
   justify-content: space-between;
   font-size: 0.78rem;
-  color: #789;
+  color: var(--ink-soft);
   margin-top: 0.15rem;
 }
 
@@ -492,7 +577,7 @@ footer {
 .switch .slider {
   position: absolute;
   inset: 0;
-  background: var(--sand-dark);
+  background: var(--stone-line);
   border-radius: 999px;
   cursor: pointer;
   transition: background 0.2s ease;
@@ -505,14 +590,14 @@ footer {
   height: 20px;
   left: 3px;
   top: 3px;
-  background: white;
+  background: var(--stone-card);
   border-radius: 50%;
   transition: transform 0.2s ease;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 .switch input:checked + .slider {
-  background: var(--sea);
+  background: var(--sea-deep);
 }
 
 .switch input:checked + .slider::before {

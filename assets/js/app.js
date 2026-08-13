@@ -116,21 +116,26 @@ function buildListenOrder(island) {
 
 function renderGrid() {
   islandGridEl.innerHTML = "";
+  const mastered = loadMastered();
+
   ISLANDS.forEach((island) => {
     const { done, total } = islandProgress(island);
-    const pct = total ? Math.round((done / total) * 100) : 0;
+    const dots = island.items
+      .map((item) => `<span class="dot${mastered[item.id] ? " filled" : ""}"></span>`)
+      .join("");
 
-    const card = document.createElement("button");
-    card.className = "island-card";
-    card.innerHTML = `
-      <span class="island-emoji">${island.emoji}</span>
-      <h3>${island.name}</h3>
-      <p class="hebrew-name">${island.hebrewName}</p>
-      <div class="progress-bar"><div class="progress-bar-fill" style="width:${pct}%"></div></div>
-      <p class="progress-label">${done} / ${total} mastered</p>
+    const row = document.createElement("button");
+    row.className = "island-row";
+    row.innerHTML = `
+      <div class="island-row-info">
+        <p class="island-eyebrow"><span class="island-emoji">${island.emoji}</span>${island.name}</p>
+        <div class="dot-meter" role="img" aria-label="${done} of ${total} words mastered">${dots}</div>
+        <p class="island-row-count">${done} / ${total} mastered</p>
+      </div>
+      <p class="island-row-hebrew">${island.hebrewName}</p>
     `;
-    card.addEventListener("click", () => openIsland(island.id));
-    islandGridEl.appendChild(card);
+    row.addEventListener("click", () => openIsland(island.id));
+    islandGridEl.appendChild(row);
   });
 }
 
